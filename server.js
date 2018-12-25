@@ -19,26 +19,13 @@ var app = express();
 app.use(bodyParser.json());
 app.use(allowAnyOrigin);
 
-let db;
+REWARD_CODES_BY_USER_CODE = process.env.REWARD_CODES ? JSON.parse(process.env.REWARD_CODES) : { "testUser": "testCode" };
+ACCESS_TOKEN = process.env.ACCESS_TOKEN || "testsecret";
+CORRECT_ANSWERS_NEEDED = parseInt(process.env.CORRECT_ANSWERS_NEEDED) || 25;
 
-const mongoUri = process.env.MONGODB_URI || "mongodb://localhost:27017/potter";
-mongodb.MongoClient.connect(mongoUri, (err, client) => {
-    if (err) {
-        console.log("ERROR connecting to Mongo " + JSON.stringify(err));
-        process.exit(1);
-    }
-
-    db = client.db();
-    console.log("CONNECTED to Mongo");
-
-    REWARD_CODES_BY_USER_CODE = process.env.REWARD_CODES ? JSON.parse(process.env.REWARD_CODES) : { "testUser": "testCode" };
-    ACCESS_TOKEN = process.env.ACCESS_TOKEN || "testsecret";
-    CORRECT_ANSWERS_NEEDED = parseInt(process.env.CORRECT_ANSWERS_NEEDED) || 25;
-
-    const port = process.env.PORT || 8080;
-    app.listen(port, () => {
-        console.log("app started.");
-    });
+const port = process.env.PORT || 8080;
+app.listen(port, () => {
+    console.log("app started.");
 });
 
 app.post("/authenticate", (req, res) => {
