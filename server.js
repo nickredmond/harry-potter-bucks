@@ -21,7 +21,7 @@ app.use(allowAnyOrigin);
 
 REWARD_CODES_BY_USER_CODE = process.env.REWARD_CODES ? JSON.parse(process.env.REWARD_CODES) : { "testUser": "testCode" };
 ACCESS_TOKEN = process.env.ACCESS_TOKEN || "testsecret";
-CORRECT_ANSWERS_NEEDED = parseInt(process.env.CORRECT_ANSWERS_NEEDED) || 25;
+CORRECT_ANSWERS_NEEDED = parseInt(process.env.CORRECT_ANSWERS_NEEDED) || 27;
 
 const port = process.env.PORT || 8080;
 app.listen(port, () => {
@@ -340,5 +340,221 @@ const QUESTIONS = [
         answerType: 'text',
         numberOfAnswers: 1,
         possibleAnswers: ['Wronsky Feint']
+    },
+    {
+        id: 26,
+        text: 'Where was Madam Marsh traveling to via the Knight Bus in 1993?',
+        answerType: 'text',
+        numberOfAnswers: 1,
+        possibleAnswers: ['Abergavenny']
+    },
+    {
+        id: 27,
+        text: 'In what year did Lily and James Potter die?',
+        answerType: 'number',
+        numberOfAnswers: 1,
+        possibleAnswers: [1981]
+    },
+    {
+        id: 28,
+        text: 'What was the final score of the 422nd Quidditch World Cup final?',
+        answerType: 'number',
+        numberOfAnswers: 2,
+        possibleAnswers: [[170, 160]]
+    },
+    {
+        id: 29,
+        text: 'What creatures are depicted on the Fountain of Magical Brethren?',
+        answerType: 'text',
+        numberOfAnswers: 5,
+        possibleAnswers: [
+            ['Wizard', 'Witch', 'Centaur', 'Goblin', 'House-elf'],
+            ['Wizard', 'Witch', 'Centaur', 'Goblin', 'House elf'],
+            ['Wizard', 'Witch', 'Centaur', 'Goblin', 'Houseelf']
+        ]
+    },
+    {
+        id: 30,
+        text: 'Which ear did George Weasley lose?',
+        answerType: 'text',
+        numberOfAnswers: 1,
+        possibleAnswers: ['Left', 'Left ear']
+    },
+    {
+        id: 31,
+        text: 'The Drink of Despair - The potion Dumbledore must drink to get the locket - is what color, exactly?',
+        answerType: 'text',
+        numberOfAnswers: 1,
+        possibleAnswers: ['Emerald green', 'Emerald']
+    },
+    {
+        id: 32,
+        text: 'What is the first password used in Gryffindor Tower?',
+        answerType: 'text',
+        numberOfAnswers: 1,
+        possibleAnswers: ['Caput Draconis']
+    },
+    {
+        id: 33,
+        text: 'Who did Neville Longbottom marry?',
+        answerType: 'text',
+        numberOfAnswers: 1,
+        possibleAnswers: ['Hannah Abbott']
+    },
+    {
+        id: 34,
+        text: 'What fruit do you have to tickle in order to enter the Hogwarts kitchen?',
+        answerType: 'text',
+        numberOfAnswers: 1,
+        possibleAnswers: ['Pear']
+    },
+    {
+        id: 35,
+        text: 'What was the second Horcrux?',
+        answerType: 'text',
+        numberOfAnswers: 1,
+        possibleAnswers: ['The Gaunt Ring', 'Gaunt Ring']
+    },
+    {
+        id: 36,
+        text: 'What was Snape\'s patronus?',
+        answerType: 'text',
+        numberOfAnswers: 1,
+        possibleAnswers: ['Doe']
+    },
+    {
+        id: 37,
+        text: 'How many owls did Hermione get?',
+        answerType: 'text',
+        numberOfAnswers: 1,
+        possibleAnswers: ['Eleven', '11']
+    },
+    {
+        id: 38,
+        text: 'Where did Harry live with his parents?',
+        answerType: 'text',
+        numberOfAnswers: 1,
+        possibleAnswers: ['Godric\'s Hollow', 'Godrics Hollow']
+    },
+    {
+        id: 39,
+        text: 'In Harry\'s Care of Magical Creatures class, taught by Hagrid, how many people could see thestrals?',
+        answerType: 'text',
+        numberOfAnswers: 1,
+        possibleAnswers: ['Three', '3']
+    },
+    {
+        id: 40,
+        text: 'How many inches tall were the Cornish Pixies in Lockhart\'s first class?',
+        answerType: 'text',
+        numberOfAnswers: 1,
+        possibleAnswers: ['Eight', '8']
+    },
+    {
+        id: 41,
+        text: 'Approximtely how many dementors attacked Harry, Sirius and hermione at the lake?',
+        answerType: 'number',
+        numberOfAnswers: 1,
+        possibleAnswers: [150]
+    },
+    {
+        id: 42,
+        text: 'What does R.A.B stand for?',
+        answerType: 'text',
+        numberOfAnswers: 1,
+        possibleAnswers: ['Regulus Articulus Black']
+    },
+    {
+        id: 43,
+        text: 'What witch is renowned for repeatedly getting caught by muggles so she could use the flame freezing charm while being burnt at the stake?',
+        answerType: 'text',
+        numberOfAnswers: 1,
+        possibleAnswers: ['Wendelin the Weird', 'Wendelin']
+    },
+    {
+        id: 44,
+        text: 'What is the incantation to mark a surface with an "X"?',
+        answerType: 'text',
+        numberOfAnswers: 1,
+        possibleAnswers: ['Flagrate']
+    },
+    {
+        id: 45,
+        text: 'Which book does Hermione steal from Dumbledore\'s office?',
+        answerType: 'text',
+        numberOfAnswers: 1,
+        possibleAnswers: ['Magick Moste Evile']
+    },
+    {
+        id: 46,
+        text: 'Where did Harry\'s mother grow up?',
+        answerType: 'text',
+        numberOfAnswers: 1,
+        possibleAnswers: ['Cokeworth']
+    },
+    {
+        id: 47,
+        text: 'Where did Voldemort\'s father live?',
+        answerType: 'text',
+        numberOfAnswers: 1,
+        possibleAnswers: ['Little Hangleton']
+    },
+    {
+        id: 48,
+        text: 'Who did Harry take to the Yule Ball?',
+        answerType: 'text',
+        numberOfAnswers: 1,
+        possibleAnswers: ['Parvati Patil']
+    },
+    {
+        id: 49,
+        text: 'In year seven when the gang of Snatchers caught up with Ron, Harry, and Hermione, who was Greyback\'s friend?',
+        answerType: 'text',
+        numberOfAnswers: 1,
+        possibleAnswers: ['Scabior']
+    },
+    {
+        id: 50,
+        text: 'Who managed to place the Imperious Curse on Pius Thicknesse?',
+        answerType: 'text',
+        numberOfAnswers: 1,
+        possibleAnswers: ['Yaxley']
+    },
+    {
+        id: 51,
+        text: 'What color did Fleur think that Ginny and Gabrielle should wear for her wedding?',
+        answerType: 'text',
+        numberOfAnswers: 1,
+        possibleAnswers: ['Gold']
+    },
+    {
+        id: 52,
+        text: 'When Hermione answered Professor Sprout\'s first question in year 2, how many points did she receive?',
+        answerType: 'text',
+        numberOfAnswers: 1,
+        possibleAnswers: ['Ten', '10']
+    },
+    {
+        id: 53,
+        text: 'What brand of fireworks did Fred and George set off in year 5?',
+        answerType: 'text',
+        numberOfAnswers: 1,
+        possibleAnswers: ['Dr. Filibuster\'s', 'Dr Filibuster\'s', 'Dr. Filibusters', 
+        'Dr Filibusters', 'Dr. Filibuster', 'Dr Filibuster'
+        ]
+    },
+    {
+        id: 54,
+        text: 'What is Albus Dumbledore\'s third middle name?',
+        answerType: 'text',
+        numberOfAnswers: 1,
+        possibleAnswers: ['Brian']
+    },
+    {
+        id: 55,
+        text: 'What is Old Mrs. Figg\'s first name?',
+        answerType: 'text',
+        numberOfAnswers: 1,
+        possibleAnswers: ['Arabella']
     }
 ];
