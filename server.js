@@ -21,7 +21,7 @@ app.use(allowAnyOrigin);
 
 REWARD_CODES_BY_USER_CODE = process.env.REWARD_CODES ? JSON.parse(process.env.REWARD_CODES) : { "testUser": "testCode" };
 ACCESS_TOKEN = process.env.ACCESS_TOKEN || "testsecret";
-CORRECT_ANSWERS_NEEDED = parseInt(process.env.CORRECT_ANSWERS_NEEDED) || 27;
+CORRECT_ANSWERS_NEEDED = parseInt(process.env.CORRECT_ANSWERS_NEEDED) || 30;
 
 const port = process.env.PORT || 8080;
 app.listen(port, () => {
