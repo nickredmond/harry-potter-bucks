@@ -21,7 +21,7 @@ app.use(allowAnyOrigin);
 
 REWARD_CODES_BY_USER_CODE = process.env.REWARD_CODES ? JSON.parse(process.env.REWARD_CODES) : { "testUser": "testCode" };
 ACCESS_TOKEN = process.env.ACCESS_TOKEN || "testsecret";
-CORRECT_ANSWERS_NEEDED = parseInt(process.env.CORRECT_ANSWERS_NEEDED) || 30;
+CORRECT_ANSWERS_NEEDED = parseInt(process.env.CORRECT_ANSWERS_NEEDED) || 35;
 
 const port = process.env.PORT || 8080;
 app.listen(port, () => {
@@ -33,7 +33,7 @@ app.post("/authenticate", (req, res) => {
     if (Object.keys(REWARD_CODES_BY_USER_CODE).includes(userCode)) {
         userData[userCode] = {
             questionIdsAttempted: [],
-            numberOfCorrectAnswers: 0
+            questionIdsCorrect: []
         };
         res.send({ accessToken: ACCESS_TOKEN });
     }
@@ -50,9 +50,11 @@ app.post("/question", (req, res) => {
             res.status(401).send({error: 'Please authenticate before continuing'});
         }
         else {
-            const questionsRemaining = QUESTIONS.filter(question => {
-                return !userData[userCode].questionIdsAttempted.includes(question.id);
-            });
+            if (userData[userCode].questionIdsAttempted.length >= QUESTIONS.length) {
+                userData[userCode].questionIdsAttempted = [];
+            }
+            const questionsRemaining = getQuestionsRemaining(userCode);
+
             const nextQuestion = questionsRemaining[Math.floor(Math.random() * questionsRemaining.length)];
             const responseBody = {
                 id: nextQuestion.id,
@@ -79,8 +81,6 @@ app.post("/submit", (req, res) => {
             res.status(400).send({error: 'Cannot submit same question more than once.'})
         }
         else {
-            
-
             const question = QUESTIONS.find(question => question.id === questionId);
             let isRightAnswer = false;
             
@@ -114,16 +114,11 @@ app.post("/submit", (req, res) => {
 
             userData[userCode].questionIdsAttempted.push(questionId);
             if (isRightAnswer) {
-                userData[userCode].numberOfCorrectAnswers = userData[userCode].numberOfCorrectAnswers + 1;
-            }
-            else {
-                userData[userCode] = {
-                    questionIdsAttempted: [],
-                    numberOfCorrectAnswers: 0
-                };
+                userData[userCode].questionIdsCorrect.push(questionId);
             }
 
-            const isTestComplete = userData[userCode].numberOfCorrectAnswers >= CORRECT_ANSWERS_NEEDED;
+            const numberOfCorrectAnswers = userData[userCode].questionIdsCorrect.length;
+            const isTestComplete = numberOfCorrectAnswers >= CORRECT_ANSWERS_NEEDED;
             const reward = isTestComplete ? REWARD_CODES_BY_USER_CODE[userCode] : null;
 
             res.send({ isCorrect: isRightAnswer, reward: reward });
@@ -134,6 +129,13 @@ app.post("/submit", (req, res) => {
         res.status(401).send('Access token invalid or missing!');
     }
 });
+
+const getQuestionsRemaining = function(userCode) {
+    return QUESTIONS.filter(question => {
+        return !userData[userCode].questionIdsAttempted.includes(question.id) && 
+            !userData[userCode].questionIdsCorrect.includes(question.id);
+    });
+}
 
 const QUESTIONS = [
     {
@@ -336,10 +338,10 @@ const QUESTIONS = [
     },
     {
         id: 25,
-        text: 'What is the name of the Quidditch move where a seeker "fakes" seeing the snitch and dives to the ground but pulls out of the dive just in time but the opposing seeker plumets to the ground?',
+        text: 'What color is Petunia Dursley\'s hair?',
         answerType: 'text',
         numberOfAnswers: 1,
-        possibleAnswers: ['Wronsky Feint']
+        possibleAnswers: ['Blonde']
     },
     {
         id: 26,
@@ -556,5 +558,65 @@ const QUESTIONS = [
         answerType: 'text',
         numberOfAnswers: 1,
         possibleAnswers: ['Arabella']
+    },
+    {
+        id: 56,
+        text: 'On what "dull, gray" day does the story of Harry Potter begin?',
+        answerType: 'text',
+        numberOfAnswers: 1,
+        possibleAnswers: ['Tuesday']
+    },
+    {
+        id: 57,
+        text: 'Uncle Vernon\'s office is on what floor of the Grunnings building?',
+        answerType: 'text',
+        numberOfAnswers: 1,
+        possibleAnswers: ['9', '9th', 'Ninth']
+    },
+    {
+        id: 58,
+        text: 'According to Mr. Ollivander, James Potter\'s wand was exceptionally good for what?',
+        answerType: 'text',
+        numberOfAnswers: 1,
+        possibleAnswers: ['Transfiguration']
+    },
+    {
+        id: 59,
+        text: 'Who was the quidditch commentator in Harry\'s first years at Hogwarts?',
+        answerType: 'text',
+        numberOfAnswers: 1,
+        possibleAnswers: ['Lee Jordan']
+    },
+    {
+        id: 60,
+        text: 'What society did Hermione start in her fourth year?',
+        answerType: 'text',
+        numberOfAnswers: 1,
+        possibleAnswers: ['Society for the Promotion of Elfish Welfare', 'Society for the Promotion of Elvish Welfare',
+            'Society for Promotion of Elfish Welfare', 'Society for Promotion of Elvish Welfare',
+            'The Society for the Promotion of Elfish Welfare', 'The Society for the Promotion of Elvish Welfare',
+            'The Society for Promotion of Elfish Welfare', 'The Society for Promotion of Elvish Welfare'
+        ]
+    },
+    {
+        id: 61,
+        text: 'What potion did Harry Potter take to get Slughorn\'s memories?',
+        answerType: 'text',
+        numberOfAnswers: 1,
+        possibleAnswers: ['Felix Felicis']
+    },
+    {
+        id: 62,
+        text: 'Who did Hermione take to Slughorn\'s Christmas party?',
+        answerType: 'text',
+        numberOfAnswers: 1,
+        possibleAnswers: ['Cormac McLaggen']
+    },
+    {
+        id: 63,
+        text: 'Who was the first to be stunned by the Basilisk?',
+        answerType: 'text',
+        numberOfAnswers: 1,
+        possibleAnswers: ['Mrs. Norris', 'Mrs Norris', 'Norris']
     }
 ];
